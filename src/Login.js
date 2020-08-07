@@ -1,40 +1,45 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "./index";
-import firebase from 'firebase';
+import firebase from "firebase";
+import { withRouter } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setErrors] = useState("");
-  console.log(process.env.REACT_APP_APP_ID)
+
   const Auth = useContext(AuthContext);
-  const handleForm = e => {
+  const handleForm = (e) => {
     e.preventDefault();
     firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log(res)
-      if (res.user) Auth.setLoggedIn(true);
-    })
-    .catch(e => {
-      setErrors(e.message);
-    });
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((res) => {
+            if (res.user) Auth.setLoggedIn(true);
+            history.push("/");
+          })
+          .catch((e) => {
+            setErrors(e.message);
+          });
+      });
   };
-
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={e => handleForm(e)}>
+      <form onSubmit={(e) => handleForm(e)}>
         <input
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           name="email"
           type="email"
           placeholder="email"
         />
         <input
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           name="password"
           value={password}
           type="password"
@@ -48,4 +53,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

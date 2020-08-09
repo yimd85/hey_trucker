@@ -1,35 +1,31 @@
 const express = require('express');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-require('./config/keys');
+const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
+const passport = require('passport')
+
+const keys = require('./config/keys');
+
+require('./models/User'); //this needs to be first because this will execute
+require('./services/passport'); //then the passport which uses the schema will work
+
+mongoose.connect(keys.MONGO_URI);
+
 
 const app = express();
 
-passport.use(new GoogleStrategy({
-    clientID: keys.GOOGLE_CLIENT_ID, //variable is located in ./config/keys
-    clientSecret: keys.GOOGLE_CLIENT_SECRET, //variable is located in ./config/keys
-    callbackURL: "/auth/google/callback"
-},
-    (accessToken) => {
-        console.log(accessToken)
-    }
+app.use(
+    cookieSession({
+        maxAge: 30 * 24 * 60 * 60 * 1000, //30 days expiration
+        keys: [keys.COOKIE_KEY]
+    })
+)
 
-    // function (accessToken, refreshToken, profile, cb) {
-    //     User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //         return cb(err, user);
-    //     });
-    // }
-));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// app.get('/auth/google/callback',
-//     passport.authenticate('google', { failureRedirect: '/login' }),
-//     function (req, res) {
-//         // Successful authentication, redirect home.
-//         res.redirect('/');
-//     });
+//is the same as const authRoutes = require('./routes/authRoutes');
+//authRoutes(app);
+require('./routes/authRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);

@@ -1,61 +1,151 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Payments from './Payments';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
+import Payments from './Payments';
+import * as actions from '../actions'
 import Logo from './Logo-Light.png'
 
 class Header extends Component {
+    state = { open: false }
 
-    renderContent() {
+    renderLoginOrLogOut() {
         switch (this.props.auth) {
             case null:
                 return null;
             case false: //if not signed in
-                return <li>
-                    <a
-                        href="/auth/google"
-                        style={{
-                            textTransform: "capitalize",
-                            fontSize: '18px',
-                            fontWeight: 'bold',
-                            color: '#473ff6',
-                            backgroundColor: '#fff'
-                        }}
-                        className="waves-effect waves-light btn"
-                    >
-                        {'Login'}
-                    </a>
-                </li>;
+                return (
+                    <li >
+                        <a
+                            style={{ fontSize: '28px' }}
+                            href="/auth/google"
+                        >
+                            {'Log In'}
+                        </a>
+                    </li>
+                );
             default: //if not signed in
-                return <li>
-                    <a
-                        href="/api/logout"
-                        style={{
-                            textTransform: "capitalize",
-                            fontSize: '18px',
-                            fontWeight: 'bold',
-                            color: '#473ff6',
-                            backgroundColor: '#fff'
-                        }}
-                        className="waves-effect waves-light btn"
-                    >
-                        {'Log Out'}
-                    </a>
-                    <Payments/>
- 
+                return (
+                    <li >
+                        <a
+                            style={{ fontSize: '28px' }}
+                            href="/api/logout"
 
-                    
-                </li>;
+                        >
+                            {'Log Out'}
+                        </a>
+                    </li>
+                );
         }
     }
+
+    renderProfileJobBoardsOrJoinNow() {
+        let subscriptionStatus = null;
+        if (this.props.auth) {
+            subscriptionStatus = this.props.auth.subscription;
+        }
+        switch (subscriptionStatus) {
+            case null:
+                return null;
+            case false: //if not subscribed
+                return <li><a style={{ fontSize: '28px' }} href="/job_board">{'Join Now'}</a></li>;
+            default: //if not signed in
+                return (
+                    <>
+                        <li><a style={{ fontSize: '28px' }} href="/job_board">{'Profile'}</a></li>
+                        <li><a style={{ fontSize: '28px' }} href="/job_board">{'Job Board'}</a></li >
+                    </>
+                );
+        }
+    }
+
+    menuButtonrenderLoginOrLogOut() {
+
+        switch (this.props.auth) {
+            case null:
+                return null;
+            case false: //if not signed in
+                return (
+                    <div >
+                        <a
+                            href="/auth/google"
+                            style={{ textDecoration: 'none', color: 'white' }}
+                            onClick={() => this.setState({ open: false })}
+                        >
+                            <h5>{"Log In"}</h5>
+                        </a>
+                    </div>
+                );
+            default: //if signed in
+                return (
+                    <div>
+                        <a
+                            href="/api/logout"
+                            style={{ textDecoration: 'none', color: 'white' }}
+                            onClick={() => this.setState({ open: false })}
+                        >
+                            <h5 >{"Log Out"}</h5>
+                        </a>
+                    </div>
+                );
+        }
+    }
+
+    menuButtonrRenderProfileJobBoardsOrJoinNow() {
+        let subscriptionStatus = null;
+        if (this.props.auth) {
+            subscriptionStatus = this.props.auth.subscription;
+        }
+        switch (subscriptionStatus) {
+            case null:
+                return null;
+            case false: //if not subscribed
+                return <div className={'regular'}>
+                    <Link
+                        style={{ color: 'white' }}
+                        onClick={() => this.setState({ open: false })}
+                        to={'/surveys'}
+                    >
+                        <h5>{"Join Now"}</h5>
+                    </Link>
+                </div>;
+            default: //if not signed in
+                return (
+                    <>
+                        <div className={'regular'}>
+                            <Link
+                                style={{ color: 'white' }}
+                                onClick={() => this.setState({ open: false })}
+                                to={'/surveys'}
+                            >
+                                <h5>{"Job Board"}</h5>
+                            </Link>
+                        </div>
+                        <div className={'regular'}>
+                            <Link
+                                style={{ color: 'white' }}
+                                onClick={() => this.setState({ open: false })}
+                                to={'/surveys'}
+
+                            >
+                                <h5>{"Profile"}</h5>
+                            </Link>
+                        </div>
+                    </>
+                );
+        }
+    }
+
     render() {
         return (
             <div>
                 <nav style={{ backgroundColor: '#473ff6', height: '84px' }} >
                     <div style={{ padding: '10px 30px' }} className="nav-wrapper">
                         <Link
-                            to={this.props.auth ? "/surveys" : "/"}
+                            to={"/"}
                             className="brand-logo"
                         >
                             <img
@@ -65,43 +155,55 @@ class Header extends Component {
                                 alt={'hey-trucker-logo'}
                             />
                         </Link>
-                        <a href="/" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                        <ul className="right hide-on-med-and-down">
-                            {/* <li ><a className={'regular'} style={{ fontSize: '18px' }} href="/">Home</a></li> */}
-                            {/* <li><a className={'regular'} style={{ fontSize: '18px' }} href="/">Services</a></li>
-                            <li><a className={'regular'} style={{ fontSize: '18px' }} href="/">Truckers</a></li>
-                            <li><a className={'regular'} style={{ fontSize: '18px' }} href="/">About Us</a></li> */}
-                            <li><a className={'regular'} style={{ fontSize: '18px' }} href="/job_board">Join Now</a></li>
-                            <li><a className={'regular'} style={{ fontSize: '18px' }} href="/job_board">Job Boards</a></li>
-                            <li><a className={'regular'} style={{ fontSize: '18px' }} href="/account">Account</a></li>
-                            <li><a className={'regular'} style={{ fontSize: '18px' }} href="/account">Payments</a></li>
-                            
+                        <a
+                            href={'!#'}
+                            onClick={() => this.setState({ open: true })}
+                            data-target="mobile-demo"
+                            className="sidenav-trigger"
+                            style={{ marginTop: '4px', display: 'flex', alignContent: 'center', justifyContent: 'center' }}
+                        >
+                            <i className="material-icons">{"menu"}</i>
+                        </a>
 
-                            {/* <a
-                                href="/"
-                                style={{
-                                    textTransform: "capitalize",
-                                    fontSize: '18px',
-                                    fontWeight: 'bold',
-                                    color: '#473ff6',
-                                    backgroundColor: '#fff'
-                                }}
-                                className="waves-effect waves-light btn"
-                            >
-                                {'Login'}
-                            </a> */}
-                            {this.renderContent()}
+                        <ul style={{ fontSize: '28px' }} className="right hide-on-med-and-down regular">
+                            <li  ><a style={{ fontSize: '28px' }} href="/">{'Home'}</a></li>
+                            {this.renderProfileJobBoardsOrJoinNow()}
+                            {this.renderLoginOrLogOut()}
+                            {/* <li>
+                                <Payments />
+                                <button onClick={() => this.props.getDrivers()}  >
+                                    {' testing adding drivers'}
+                                </button>
+
+                            </li> */}
                         </ul>
                     </div>
                 </nav>
 
-                <ul className="sidenav" id="mobile-demo">
-                    <li><a href="/">Sass</a></li>
-                    <li><a href="/">Components</a></li>
-                    <li><a href="/">Javascript</a></li>
-                    <li><a href="/">Mobile</a></li>
-                </ul>
-            </div>
+                <Dialog
+                    open={this.state.open || false}
+                >
+                    <DialogTitle style={{ backgroundColor: '#473ff6', color: 'white', textDecoration: 'underline' }} id="alert-dialog-title">
+                        <span>
+                            <h3>{"Hey Trucker"}</h3>
+                        </span>
+                    </DialogTitle>
+                    <DialogContent style={{ backgroundColor: '#473ff6', color: 'white', display: 'flex', flexDirection: 'column' }}>
+                        <div className={'regular'}>
+                            <Link
+                                style={{ color: 'white' }}
+                                onClick={() => this.setState({ open: false })}
+                                to={'/'}
+                            >
+                                <h5>{"Home"}</h5>
+                            </Link>
+                        </div>
+                        {this.menuButtonrRenderProfileJobBoardsOrJoinNow()}
+                        {this.menuButtonrenderLoginOrLogOut()}
+                    </DialogContent>
+
+                </Dialog >
+            </div >
         )
     }
 }
@@ -110,4 +212,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, actions)(Header);

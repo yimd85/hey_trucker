@@ -17,7 +17,22 @@ export const fetchUser = () => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const handleToken = token =>  async dispatch => {
+export const handleToken = token => async dispatch => {
     const res = await axios.post('/api/stripe', token);
     dispatch({ type: FETCH_USER, payload: res.data });
+}
+
+
+export const addDrivers = () => async dispatch => {
+    const res = await axios.post('/api/driver');
+    dispatch(
+        console.log(res, 'test actions')
+    )
+}
+
+export const getDrivers = () => async dispatch => {
+    const res = await axios.put('/api/driver');
+    dispatch(
+        console.log(res, 'test actions')
+    )
 }

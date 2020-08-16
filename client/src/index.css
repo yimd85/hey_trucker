@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Gilroy-Heavy';
+    src: local('Gilroy-Heavy'), url(./fonts/Gilroy-Heavy.otf) format('woff');
+}
+
+@font-face {
+    font-family: 'Gilroy-Regular';
+    src: local('Gilroy-Regular'), url(./fonts/Gilroy-Regular.otf) format('woff');
+}
+
+/* a {
+    font-family: Gilroy-Heavy;
+} */
+
+.regular {
+    font-family: Gilroy-Regular;
+}
+
+.heavy {
+    font-family: Gilroy-Regular;
+}

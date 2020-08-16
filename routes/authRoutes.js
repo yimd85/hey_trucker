@@ -3,28 +3,27 @@ const passport = require('passport');
 module.exports = (app) => {
 
     app.get('/', (req, res) => {
-        res.send({bye: 'buddy'});
+        res.send({ bye: 'buddy' });
     });
 
     app.get('/auth/google',
         passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-    app.get('/auth/google/callback',
-        passport.authenticate('google')
-        // passport.authenticate('google', { failureRedirect: '/login' }),
-        // function (req, res) {
-        //     // Successful authentication, redirect home.
-        //     res.redirect('/');
-        // }
+    app.get(
+        '/auth/google/callback',
+        passport.authenticate('google'),
+        (req, res) => { // Successful authentication, redirect home.
+            res.redirect('/surveys');
+        }
     );
 
     app.get('/api/logout', (req, res) => {
         req.logout();
-        res.send(req.user);
+        res.redirect('/');
     });
 
     app.get('/api/current_user', (req, res) => {
-        res.send(req.user);
+        res.send(req.user); //the reference to the current user model is req.user  (setup by passport);
     });
 
 }

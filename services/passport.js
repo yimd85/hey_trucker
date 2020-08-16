@@ -1,6 +1,7 @@
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const KakaoStrategy = require('passport-kakao').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
@@ -25,7 +26,7 @@ passport.use(
         proxy: true
     },
         async (accessToken, refreshToken, profile, done) => {
-            const existingUser = await User.findOne({ googleId: profile.id })
+            const existingUser = await User.findOne({ userProfileId: profile.id })
 
             //if the User collection has a record w/ googleId that exists, do not save
             if (existingUser) {
@@ -34,7 +35,7 @@ passport.use(
             } else {
                 //create a new user and save to database
                 //create a new model instance
-                const userNew = await new User({ googleId: profile.id }).save();
+                const userNew = await new User({ userProfileId: profile.id }).save();
                 done(null, userNew);
             }
         }

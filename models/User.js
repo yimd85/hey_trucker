@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    googleId: String,
+    userProfileId: String,
+    subscription: { type: Boolean, default: false }
 });
 
 

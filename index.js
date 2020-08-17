@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 
 require('./models/User'); //this needs to be first because this will execute
-require('./services/passport'); //then the passport which uses the schema will work
+require('./models/Driver'); //this needs to be second because this will execute
+require('./services/passport'); //then the passport, which is used in the users schema -> will work
 
 mongoose.connect(keys.MONGO_URI);
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 //authRoutes(app);
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/driverRoutes')(app);
 
 //this is code for production only
 if (process.env.NODE_ENV === 'production') {

@@ -36,3 +36,9 @@ export const getDrivers = () => async dispatch => {
         console.log(res, 'test actions')
     )
 }
+
+
+
+export const logIn = () => async dispatch => {
+    const res = await axios.get('/auth/google');
+}

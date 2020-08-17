@@ -33,7 +33,6 @@ class Header extends Component {
                         <a
                             style={{ fontSize: '28px' }}
                             href="/api/logout"
-
                         >
                             {'Log Out'}
                         </a>
@@ -51,32 +50,31 @@ class Header extends Component {
             case null:
                 return null;
             case false: //if not subscribed
-                return <li><a style={{ fontSize: '28px' }} href="/job_board">{'Join Now'}</a></li>;
+                return <li><a style={{ fontSize: '28px' }} href="/join">{'Join Now'}</a></li>;
             default: //if not signed in
                 return (
                     <>
-                        <li><a style={{ fontSize: '28px' }} href="/job_board">{'Profile'}</a></li>
-                        <li><a style={{ fontSize: '28px' }} href="/job_board">{'Job Board'}</a></li >
+                        <li><a style={{ fontSize: '28px' }} href="/profile">{'Profile'}</a></li>
+                        <li><a style={{ fontSize: '28px' }} href="/jobs">{'Job Board'}</a></li >
                     </>
                 );
         }
     }
 
     menuButtonrenderLoginOrLogOut() {
-
         switch (this.props.auth) {
             case null:
                 return null;
             case false: //if not signed in
                 return (
                     <div >
-                        <a
-                            href="/auth/google"
-                            style={{ textDecoration: 'none', color: 'white' }}
+                        <Link
+                            style={{ color: 'white' }}
                             onClick={() => this.setState({ open: false })}
+                            to={'/login'}
                         >
                             <h5>{"Log In"}</h5>
-                        </a>
+                        </Link>
                     </div>
                 );
             default: //if signed in
@@ -89,6 +87,8 @@ class Header extends Component {
                         >
                             <h5 >{"Log Out"}</h5>
                         </a>
+
+
                     </div>
                 );
         }
@@ -156,7 +156,7 @@ class Header extends Component {
                             />
                         </Link>
                         <a
-                            href={'!#'}
+                            // href='!#'
                             onClick={() => this.setState({ open: true })}
                             data-target="mobile-demo"
                             className="sidenav-trigger"
@@ -166,7 +166,9 @@ class Header extends Component {
                         </a>
 
                         <ul style={{ fontSize: '28px' }} className="right hide-on-med-and-down regular">
-                            <li  ><a style={{ fontSize: '28px' }} href="/">{'Home'}</a></li>
+
+                            <li><a style={{ fontSize: '28px' }} href="/login">{'Login'}</a></li>
+                            <li><a style={{ fontSize: '28px' }} href="/">{'Home'}</a></li>
                             {this.renderProfileJobBoardsOrJoinNow()}
                             {this.renderLoginOrLogOut()}
                             {/* <li>

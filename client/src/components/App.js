@@ -5,9 +5,12 @@ import { connect } from 'react-redux';
 import * as actions from '../actions'
 import Header from './Header';
 import Landing from './Landing';
-const Dashboard = () => <h2>Dashboard</h2>
-const SurveyNew = () => <h2>SurveyNew</h2>
- 
+import Jobs from './Jobs';
+import Profile from './Profile';
+import Join from './Join';
+import Login from './Login';
+
+
 
 class App extends Component {
 
@@ -23,8 +26,10 @@ class App extends Component {
                     <div>
                         <Header />
                         <Route exact path="/" component={Landing} />
-                        <Route exact path="/surveys" component={Dashboard} />
-                        <Route path="/surveys/new" component={SurveyNew} />
+                        <Route exact path="/join" component={Join} />
+                        <Route exact path="/jobs" component={Jobs} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/Login" component={Login} />
                     </div>
                 </BrowserRouter>
             </div>

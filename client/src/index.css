@@ -19,3 +19,7 @@
 .heavy {
     font-family: Gilroy-Regular;
 }
+
+.sidenav-trigger:hover {
+    cursor: pointer;
+}

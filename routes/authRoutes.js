@@ -1,5 +1,7 @@
 const passport = require('passport');
 
+const keys = require('../config/keys');
+
 module.exports = (app) => {
 
     // app.get('/', (req, res) => {
@@ -13,7 +15,22 @@ module.exports = (app) => {
         '/auth/google/callback',
         passport.authenticate('google'),
         (req, res) => { // Successful authentication, redirect home.
-            res.redirect('/surveys');
+            res.redirect('/');
+        }
+    );
+
+    app.get('/auth/kakao', passport.authenticate('kakao'));
+
+
+    app.get(
+        '/auth/kakao/callback',
+        function (req, res, next) {
+            passport.authenticate('kakao', function (err, user) {
+                if (!user) { return res.redirect(`${keys.URL_LOCATION}/login`); }
+                req.logIn(user, function (err) {
+                    return res.redirect(`${keys.URL_LOCATION}/`);
+                });
+            })(req, res);
         }
     );
 
@@ -23,6 +40,7 @@ module.exports = (app) => {
     });
 
     app.get('/api/current_user', (req, res) => {
+
         res.send(req.user); //the reference to the current user model is req.user  (setup by passport);
     });
 

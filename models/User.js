@@ -3,7 +3,9 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
     userProfileId: String,
-    subscription: { type: Boolean, default: false }
+    subscription: { type: Boolean, default: false },
+    method: String
+
 });
 
 

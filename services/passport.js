@@ -1,7 +1,7 @@
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const KakaoStrategy = require('passport-kakao').Strategy;
+const KakaoStrategy = require('passport-kakao').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
@@ -26,7 +26,7 @@ passport.use(
         proxy: true
     },
         async (accessToken, refreshToken, profile, done) => {
-            const existingUser = await User.findOne({ userProfileId: profile.id })
+            const existingUser = await User.findOne({ userProfileId: profile.id, method: 'google' })
 
             //if the User collection has a record w/ googleId that exists, do not save
             if (existingUser) {
@@ -35,8 +35,27 @@ passport.use(
             } else {
                 //create a new user and save to database
                 //create a new model instance
-                const userNew = await new User({ userProfileId: profile.id }).save();
+                const userNew = await new User({ userProfileId: profile.id, method: 'google' }).save();
                 done(null, userNew);
             }
         }
     ));
+
+passport.use(
+    new KakaoStrategy({
+        clientID: keys.KAKAO_KEY,
+        callbackURL: "/auth/kakao/callback",
+    }, async (token, tokenSecret, profile, done) => {
+        const existingUser = await User.findOne({ userProfileId: profile.id })
+
+        //if the User collection has a record w/ kakao that exists, do not save
+        if (existingUser) {
+            //done is a method from passport that lets the auth case know that it is finished
+            done(null, existingUser);
+        } else {
+            //create a new user and save to database
+            //create a new model instance
+            const userNew = await new User({ userProfileId: profile.id, method: 'kakao' }).save();
+            done(null, userNew);
+        }
+    }));

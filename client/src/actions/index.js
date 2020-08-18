@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER } from './types';
+import { FETCH_USER, ADD_DRIVER } from './types';
 
 
 // export const fetchUser = () => {
@@ -23,11 +23,9 @@ export const handleToken = token => async dispatch => {
 }
 
 
-export const addDrivers = () => async dispatch => {
-    const res = await axios.post('/api/driver');
-    dispatch(
-        console.log(res, 'test actions')
-    )
+export const addDrivers = (data) => async dispatch => {
+    const res = await axios.post('/api/driver', data);
+    dispatch({ type: ADD_DRIVER, payload: res.data });
 }
 
 export const getDrivers = () => async dispatch => {
@@ -37,8 +35,3 @@ export const getDrivers = () => async dispatch => {
     )
 }
 
-
-
-export const logIn = () => async dispatch => {
-    const res = await axios.get('/auth/google');
-}

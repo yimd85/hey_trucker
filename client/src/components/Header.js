@@ -18,25 +18,18 @@ class Header extends Component {
                 return null;
             case false: //if not signed in
                 return (
-                    <li >
-                        <a
-                            style={{ fontSize: '28px' }}
-                            href="/auth/google"
-                        >
-                            {'Log In'}
-                        </a>
-                    </li>
+                    <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/login">{'Log In'}</a></div>
                 );
             default: //if not signed in
                 return (
-                    <li >
+                    <div className={'paddingHeader center'}   >
                         <a
-                            style={{ fontSize: '28px' }}
+                            className={'headerNavLinks headerColor'}
                             href="/api/logout"
                         >
                             {'Log Out'}
                         </a>
-                    </li>
+                    </div>
                 );
         }
     }
@@ -50,12 +43,12 @@ class Header extends Component {
             case null:
                 return null;
             case false: //if not subscribed
-                return <li><a style={{ fontSize: '28px' }} href="/join">{'Join Now'}</a></li>;
+                return <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/join">{'Join Now'}</a></div>;
             default: //if not signed in
                 return (
                     <>
-                        <li><a style={{ fontSize: '28px' }} href="/profile">{'Profile'}</a></li>
-                        <li><a style={{ fontSize: '28px' }} href="/jobs">{'Job Board'}</a></li >
+                        <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/profile">{'Profile'}</a></div>
+                        <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/jobs">{'Job Board'}</a></div >
                     </>
                 );
         }
@@ -67,28 +60,26 @@ class Header extends Component {
                 return null;
             case false: //if not signed in
                 return (
-                    <div >
+                    <div className={'dialogNavSpacing'}>
                         <Link
-                            style={{ color: 'white' }}
+                            className={'headerNavLinks headerColor'}
                             onClick={() => this.setState({ open: false })}
                             to={'/login'}
                         >
-                            <h5>{"Log In"}</h5>
+                            {"Log In"}
                         </Link>
                     </div>
                 );
             default: //if signed in
                 return (
-                    <div>
+                    <div className={'dialogNavSpacing'}>
                         <a
                             href="/api/logout"
-                            style={{ textDecoration: 'none', color: 'white' }}
+                            className={' headerNavLinks headerColor'}
                             onClick={() => this.setState({ open: false })}
                         >
-                            <h5 >{"Log Out"}</h5>
+                            {"Log Out"}
                         </a>
-
-
                     </div>
                 );
         }
@@ -103,35 +94,34 @@ class Header extends Component {
             case null:
                 return null;
             case false: //if not subscribed
-                return <div className={'regular'}>
+                return <div className={'dialogNavSpacing'}>
                     <Link
-                        style={{ color: 'white' }}
+                        className={'headerNavLinks headerColor'}
                         onClick={() => this.setState({ open: false })}
                         to={'/surveys'}
                     >
-                        <h5>{"Join Now"}</h5>
+                        {"Join Now"}
                     </Link>
                 </div>;
             default: //if not signed in
                 return (
                     <>
-                        <div className={'regular'}>
+                        <div className={'dialogNavSpacing'}>
                             <Link
-                                style={{ color: 'white' }}
+                                className={' dialogNavSpacing headerNavLinks headerColor'}
                                 onClick={() => this.setState({ open: false })}
                                 to={'/surveys'}
                             >
-                                <h5>{"Job Board"}</h5>
+                                {"Profile"}
                             </Link>
                         </div>
-                        <div className={'regular'}>
+                        <div className={'dialogNavSpacing'}>
                             <Link
-                                style={{ color: 'white' }}
+                                className={'dialogNavSpacing headerNavLinks headerColor'}
                                 onClick={() => this.setState({ open: false })}
                                 to={'/surveys'}
-
                             >
-                                <h5>{"Profile"}</h5>
+                                {"Job Board"}
                             </Link>
                         </div>
                     </>
@@ -142,11 +132,11 @@ class Header extends Component {
     render() {
         return (
             <div>
-                <nav style={{ backgroundColor: '#473ff6', height: '84px' }} >
-                    <div style={{ padding: '10px 30px' }} className="nav-wrapper">
+                <nav className={'gilroy-regular backGroundColor'}  >
+                    <div className={'insideNavParentDiv row'} >
                         <Link
                             to={"/"}
-                            className="brand-logo"
+                            className="leftNavItems"
                         >
                             <img
                                 className="right-header"
@@ -155,20 +145,35 @@ class Header extends Component {
                                 alt={'hey-trucker-logo'}
                             />
                         </Link>
-                        <a
-                            // href='!#'
-                            onClick={() => this.setState({ open: true })}
-                            data-target="mobile-demo"
-                            className="sidenav-trigger"
-                            style={{ marginTop: '4px', display: 'flex', alignContent: 'center', justifyContent: 'center' }}
+                        <div className="middleIcon center headerColor">
+                            <a onClick={() => this.setState({ open: true })}>
+                                <i className="material-icons">{"menu"}</i>
+                            </a>
+                        </div>
+
+                        <Link
+                            to={"/"}
+                            className="middleIcon"
                         >
-                            <i className="material-icons">{"menu"}</i>
-                        </a>
+                            <img
+                                className="right-header"
+                                height='60'
+                                src={Logo}
+                                alt={'hey-trucker-logo'}
+                            />
+                        </Link>
 
-                        <ul style={{ fontSize: '28px' }} className="right hide-on-med-and-down regular">
-
-                            <li><a style={{ fontSize: '28px' }} href="/login">{'Login'}</a></li>
-                            <li><a style={{ fontSize: '28px' }} href="/">{'Home'}</a></li>
+                        <div className="middleIcon center hidden"  >
+                            <a>
+                                <i className="material-icons">{"menu"}</i>
+                            </a>
+                        </div>
+                        <div className={'leftNavItems row'} >
+                            <div className={'paddingHeader center'}   >
+                                <a className={'headerNavLinks headerColor'} href="/">
+                                    {'Home'}
+                                </a>
+                            </div>
                             {this.renderProfileJobBoardsOrJoinNow()}
                             {this.renderLoginOrLogOut()}
                             {/* <li>
@@ -178,26 +183,27 @@ class Header extends Component {
                                 </button>
 
                             </li> */}
-                        </ul>
+
+                        </div>
+
                     </div>
                 </nav>
 
-                <Dialog
-                    open={this.state.open || false}
-                >
-                    <DialogTitle style={{ backgroundColor: '#473ff6', color: 'white', textDecoration: 'underline' }} id="alert-dialog-title">
+                <Dialog open={this.state.open || false} >
+
+                    <DialogTitle className={' headerColor backGroundColor underLine'} >
                         <span>
                             <h3>{"Hey Trucker"}</h3>
                         </span>
                     </DialogTitle>
-                    <DialogContent style={{ backgroundColor: '#473ff6', color: 'white', display: 'flex', flexDirection: 'column' }}>
-                        <div className={'regular'}>
+                    <DialogContent className={'column backGroundColor'} >
+                        <div  >
                             <Link
-                                style={{ color: 'white' }}
+                                className={'headerNavLinks headerColor'}
                                 onClick={() => this.setState({ open: false })}
                                 to={'/'}
                             >
-                                <h5>{"Home"}</h5>
+                                <span >{"Home"}</span>
                             </Link>
                         </div>
                         {this.menuButtonrRenderProfileJobBoardsOrJoinNow()}
@@ -206,7 +212,7 @@ class Header extends Component {
 
                 </Dialog >
             </div >
-        )
+        );
     }
 }
 

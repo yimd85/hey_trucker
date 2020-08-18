@@ -12,7 +12,6 @@ const driverSchema = new Schema({
     state: String,
     zip: String,
     country: String,
-    country: String,
     trailerType: String,
     driversLicense: String,
     licensePlate: String,

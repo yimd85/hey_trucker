@@ -12,14 +12,104 @@
     font-family: Gilroy-Heavy;
 } */
 
-.regular {
+.gilroy-regular {
     font-family: Gilroy-Regular;
 }
 
-.heavy {
-    font-family: Gilroy-Regular;
+.gilroy-heavy {
+    font-family: Gilroy-Heavy;
 }
 
-.sidenav-trigger:hover {
+/*header css*/
+
+.backGroundColor {
+    background-color: #473ff6;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    display: flex;
+    align-items: center
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.headerColor {
+    color: white;
+}
+
+.paddingHeader {
+    padding: 10px;
+}
+
+.headerNavLinks {
+    text-decoration: none;
+    font-size: 28px
+}
+
+.dialogNavSpacing {
+    margin-top: 20px;
+}
+
+.underLine {
+    text-decoration: underline;
+}
+
+/* style={{ color: 'white', textDecoration: 'none', fontSize: '28px' }} */
+
+.insideNavParentDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+
+.middleIcon:hover {
     cursor: pointer;
 }
+
+@media (max-width: 800px) {
+    .leftNavItems {
+        display: none;
+    }
+}
+
+@media (min-width: 801px) {
+    .middleIcon {
+        display: none;
+    }
+}
+
+
+
+/* form css */
+
+@media (min-width: 800px) {
+    .formParent {
+        padding: 0px 50px;
+    }
+}
+ 
+@media (min-width: 1000px) {
+    .formParent {
+        padding: 0px 250px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .formParent {
+        padding: 0px 450px;
+    }
+}
+ 

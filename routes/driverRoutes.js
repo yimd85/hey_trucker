@@ -15,27 +15,45 @@ module.exports = app => {
 
     app.post('/api/driver', requireLogin, async (req, res) => {
         //one of the functions has to process the route. that's why require login (which is hte middle ware is where it is) and the last argument is where it is
+
+
+        const {
+            addressOne,
+            addressTwo,
+            city,
+            country,
+            email,
+            firstName,
+            lastName,
+            phone,
+            state,
+            zip,
+            trailerType,
+            driversLicense,
+            licensePlate
+        } = req.body;
+
         const driver = new Driver({
             _user: req.user.id,
-            firstName: 'test',
-            lastName: 'test',
-            email: 'test',
-            phone: 'test',
-            address: 'test',
-            addressTwo: 'test',
-            city: 'test',
-            state: 'test',
-            zip: 'test',
-            country: 'test',
-            country: 'test',
-            trailerType: 'test',
-            driversLicense: 'test',
-            licensePlate: 'test',
+            addressOne,
+            addressTwo,
+            city,
+            country,
+            email,
+            firstName,
+            lastName,
+            phone,
+            state,
+            zip,
+            trailerType,
+            driversLicense,
+            licensePlate
         });
+        console.log(driver);
 
         try {
             await driver.save();
-            res.send(req.user);
+            res.send(driver);
         } catch (err) {
             res.status(422).send(err);
         }

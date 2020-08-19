@@ -7,129 +7,134 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Payments from './Payments';
 import * as actions from '../actions'
-import Logo from './Logo-Light.png'
+import Logo from '../images/Logo-Light.png'
 
 class Header extends Component {
     state = { open: false }
 
-    renderLoginOrLogOut() {
-        switch (this.props.auth) {
-            case null:
-                return null;
-            case false: //if not signed in
-                return (
-                    <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/login">{'Log In'}</a></div>
-                );
-            default: //if not signed in
-                return (
-                    <div className={'paddingHeader center'}   >
-                        <a
-                            className={'headerNavLinks headerColor'}
-                            href="/api/logout"
-                        >
-                            {'Log Out'}
-                        </a>
-                    </div>
-                );
+    renderLoginOrLogOut(loggedInStatus) {
+
+        if (loggedInStatus) {
+            return (
+                <div className={'paddingHeader center'}   >
+                    <a
+                        className={'headerNavLinks headerColor'}
+                        href="/api/logout"
+                    >
+                        {'Log Out'}
+                    </a>
+                </div>
+            );
+
+        } else {
+            return (
+                <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/login">{'Log In'}</a></div>
+            );
         }
+
     }
 
-    renderProfileJobBoardsOrJoinNow() {
-        let subscriptionStatus = null;
-        if (this.props.auth) {
-            subscriptionStatus = this.props.auth.subscription;
-        }
-        switch (subscriptionStatus) {
-            case null:
-                return null;
-            case false: //if not subscribed
-                return <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/join">{'Join Now'}</a></div>;
-            default: //if not signed in
-                return (
-                    <>
-                        <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/profile">{'Profile'}</a></div>
-                        <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/jobs">{'Job Board'}</a></div >
-                    </>
-                );
-        }
-    }
 
-    menuButtonrenderLoginOrLogOut() {
-        switch (this.props.auth) {
-            case null:
-                return null;
-            case false: //if not signed in
-                return (
-                    <div className={'dialogNavSpacing'}>
-                        <Link
-                            className={'headerNavLinks headerColor'}
-                            onClick={() => this.setState({ open: false })}
-                            to={'/login'}
-                        >
-                            {"Log In"}
-                        </Link>
-                    </div>
-                );
-            default: //if signed in
-                return (
-                    <div className={'dialogNavSpacing'}>
-                        <a
-                            href="/api/logout"
-                            className={' headerNavLinks headerColor'}
-                            onClick={() => this.setState({ open: false })}
-                        >
-                            {"Log Out"}
-                        </a>
-                    </div>
-                );
-        }
-    }
+    menuButtonrenderLoginOrLogOut(loggedInStatus) {
 
-    menuButtonrRenderProfileJobBoardsOrJoinNow() {
-        let subscriptionStatus = null;
-        if (this.props.auth) {
-            subscriptionStatus = this.props.auth.subscription;
-        }
-        switch (subscriptionStatus) {
-            case null:
-                return null;
-            case false: //if not subscribed
-                return <div className={'dialogNavSpacing'}>
+
+        if (loggedInStatus) {
+            return (
+                <div className={'dialogNavSpacing'}>
+                    <a
+                        href="/api/logout"
+                        className={' headerNavLinks headerColor'}
+                        onClick={() => this.setState({ open: false })}
+                    >
+                        {"Log Out"}
+                    </a>
+                </div>
+            );
+
+        } else {
+            return (
+                <div className={'dialogNavSpacing'}>
                     <Link
                         className={'headerNavLinks headerColor'}
                         onClick={() => this.setState({ open: false })}
-                        to={'/surveys'}
+                        to={'/login'}
                     >
-                        {"Join Now"}
+                        {"Log In"}
                     </Link>
-                </div>;
-            default: //if not signed in
-                return (
-                    <>
-                        <div className={'dialogNavSpacing'}>
-                            <Link
-                                className={' dialogNavSpacing headerNavLinks headerColor'}
-                                onClick={() => this.setState({ open: false })}
-                                to={'/surveys'}
-                            >
-                                {"Profile"}
-                            </Link>
-                        </div>
-                        <div className={'dialogNavSpacing'}>
-                            <Link
-                                className={'dialogNavSpacing headerNavLinks headerColor'}
-                                onClick={() => this.setState({ open: false })}
-                                to={'/surveys'}
-                            >
-                                {"Job Board"}
-                            </Link>
-                        </div>
-                    </>
-                );
+                </div>
+            );
         }
     }
 
+
+    renderProfileJobBoardsOrJoinNow(customerRegistered, loggedInStatus) {
+        if (!loggedInStatus) {
+            return null
+
+        } else if (customerRegistered) {
+            return (<>
+                <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/profile">{'Profile'}</a></div>
+                <div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/jobs">{'Job Board'}</a></div >
+            </>)
+        } else {
+            return (<div className={'paddingHeader center'}   ><a className={'headerNavLinks headerColor'} href="/join">{'Join Now'}</a></div>)
+        }
+    }
+
+    menuButtonrRenderProfileJobBoardsOrJoinNow(customerRegistered, loggedInStatus) {
+
+        if (!loggedInStatus) {
+            return null
+
+        } else if (customerRegistered) {
+            return (<>
+                <div className={'dialogNavSpacing'}>
+                    <Link
+                        className={' dialogNavSpacing headerNavLinks headerColor'}
+                        onClick={() => this.setState({ open: false })}
+                        to={'/profile'}
+                    >
+                        {"Profile"}
+                    </Link>
+                </div>
+                <div className={'dialogNavSpacing'}>
+                    <Link
+                        className={'dialogNavSpacing headerNavLinks headerColor'}
+                        onClick={() => this.setState({ open: false })}
+                        to={'/jobs'}
+                    >
+                        {"Job Board"}
+                    </Link>
+                </div>
+            </>)
+        } else {
+            return (<div className={'dialogNavSpacing'}>
+                <Link
+                    className={'headerNavLinks headerColor'}
+                    onClick={() => this.setState({ open: false })}
+                    to={'/join'}
+                >
+                    {"Join Now"}
+                </Link>
+            </div>)
+        }
+
+    }
+
     render() {
+        let customerRegistered = null;
+        const { auth } = this.props.auth;
+        if (auth) {
+            if (auth.customerId) {
+                customerRegistered = auth.customerId;
+            }
+        }
+        let loggedInStatus = null;
+        if (auth) {
+            if (auth.userProfileId) {
+                loggedInStatus = auth.userProfileId;
+            }
+        }
         return (
             <div>
                 <nav className={'gilroy-regular backGroundColor'}  >
@@ -174,15 +179,9 @@ class Header extends Component {
                                     {'Home'}
                                 </a>
                             </div>
-                            {this.renderProfileJobBoardsOrJoinNow()}
-                            {this.renderLoginOrLogOut()}
-                            {/* <li>
-                                <Payments />
-                                <button onClick={() => this.props.getDrivers()}  >
-                                    {' testing adding drivers'}
-                                </button>
+                            {this.renderProfileJobBoardsOrJoinNow(customerRegistered, loggedInStatus)}
+                            {this.renderLoginOrLogOut(loggedInStatus)}
 
-                            </li> */}
 
                         </div>
 
@@ -206,8 +205,8 @@ class Header extends Component {
                                 <span >{"Home"}</span>
                             </Link>
                         </div>
-                        {this.menuButtonrRenderProfileJobBoardsOrJoinNow()}
-                        {this.menuButtonrenderLoginOrLogOut()}
+                        {this.menuButtonrRenderProfileJobBoardsOrJoinNow(customerRegistered, loggedInStatus)}
+                        {this.menuButtonrenderLoginOrLogOut(loggedInStatus)}
                     </DialogContent>
 
                 </Dialog >

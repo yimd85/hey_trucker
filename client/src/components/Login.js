@@ -3,7 +3,7 @@ import React from 'react';
 import { createButton, FacebookLoginButton } from "react-social-login-buttons";
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-import KaKaoImage from './pngwave.png'
+import KaKaoImage from '../images/pngwave.png'
 
 const configKakao = {
     text: "Login with Kakao",

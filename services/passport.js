@@ -26,6 +26,7 @@ passport.use(
         proxy: true
     },
         async (accessToken, refreshToken, profile, done) => {
+ 
             const existingUser = await User.findOne({ userProfileId: profile.id, method: 'google' })
 
             //if the User collection has a record w/ googleId that exists, do not save

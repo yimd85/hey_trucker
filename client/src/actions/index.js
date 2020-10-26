@@ -78,7 +78,7 @@ export const addDrivers = (data) => async dispatch => {
 
 export const updateDrivers = (data) => async dispatch => {
     dispatch(spinner(true));
-    const res = await axios.put('/api/driver', data); //need to update this
+    await axios.put('/api/driver', data); //need to update this
     await new Promise((resolve) => setTimeout(resolve, 1500));
     dispatch(spinner(false));
     dispatch(accountNotify(true));

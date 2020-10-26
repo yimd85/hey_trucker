@@ -51,7 +51,6 @@ module.exports = (app) => {
     });
 
     app.get('/api/current_user', (req, res) => {
-
         res.send(req.user); //the reference to the current user model is req.user  (setup by passport);
     });
 

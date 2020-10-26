@@ -9,8 +9,8 @@ require('./models/User'); //this needs to be first because this will execute
 require('./models/Driver'); //this needs to be second because this will execute
 require('./services/passport'); //then the passport, which is used in the users schema -> will work
 
-mongoose.connect(keys.MONGO_URI);
-
+// mongoose.connect(keys.MONGO_URI);
+mongoose.connect(keys.MONGO_URI, { useNewUrlParser: true });
 
 const app = express();
 

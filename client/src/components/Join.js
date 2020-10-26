@@ -84,18 +84,18 @@ class Join extends Component {
     render() {
 
         let allowButton = false;
-        if (this.state.address,
-            this.state.addressTwo,
-            this.state.city,
-            this.state.country,
-            this.state.email,
-            this.state.firstName,
-            this.state.lastName,
-            this.state.phone,
-            this.state.state,
-            this.state.zip,
-            this.state.trailerType,
-            this.state.driversLicense,
+        if (this.state.address &&
+            this.state.addressTwo &&
+            this.state.city &&
+            this.state.country &&
+            this.state.email &&
+            this.state.firstName &&
+            this.state.lastName &&
+            this.state.phone &&
+            this.state.state &&
+            this.state.zip &&
+            this.state.trailerType &&
+            this.state.driversLicense &&
             this.state.licensePlate) {
             allowButton = true;
         }

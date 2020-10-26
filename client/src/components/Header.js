@@ -5,7 +5,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Payments from './Payments';
 import * as actions from '../actions'
 import Logo from '../images/Logo-Light.png'
 

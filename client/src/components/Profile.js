@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
@@ -112,7 +112,7 @@ class Profile extends React.Component {
                              </i>
                         </Button>
                         <Button onClick={() => {
-                            { subscriptionStatus ? this.props.cancelMemberShip() : this.props.renewMembership() }
+                            subscriptionStatus ? this.props.cancelMemberShip() : this.props.renewMembership(); 
                             this.setState({ confirmation: false });
 
                         }} color="primary" style={{ backgroundColor: '#16a8a6', color: '#fff', width: '100px' }}  >

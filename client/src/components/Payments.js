@@ -3,7 +3,6 @@ import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 import * as actions from '../actions'
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 import StripLogo from '../images/StripLogo.JPG'
 
 class Payments extends Component {
@@ -18,7 +17,7 @@ class Payments extends Component {
     }
 
     render() {
-        console.log(this.props.updatePayment)
+        //console.log(this.props.updatePayment)
         return (
             <StripeCheckout
                 token={(token) => { this.save(token) }}

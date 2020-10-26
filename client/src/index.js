@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { composeWithDevTools } from "redux-devtools-extension";
 
 import reducers from './reducers';
 import App from './components/App';
@@ -11,9 +10,9 @@ import App from './components/App';
 import './index.css';
 
 const devTools =
-    process.env.NODE_ENV === "development"
-        ? composeWithDevTools(applyMiddleware(reduxThunk))
-       : 
+    // process.env.NODE_ENV === "development"
+    //     ? composeWithDevTools(applyMiddleware(reduxThunk))
+    //    : 
     applyMiddleware(reduxThunk);
 
 const store = createStore(reducers, {}, devTools)

@@ -2,7 +2,6 @@
 
 if (process.env.NODE_ENV === 'production') {
     //we are in production - return the production set of keys
-    console.log('test')
     module.exports = require('./prod');
 
 } else {
